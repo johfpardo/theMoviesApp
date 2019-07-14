@@ -48,6 +48,18 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             listViewModel.getMovies()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = self.listViewModel.movies[indexPath.row]
+        let nextSb = UIStoryboard(name: "MovieDetail", bundle: nil)
+        if let nextVc = nextSb.instantiateInitialViewController() as? MovieDetailViewController {
+            nextVc.movie = movie
+            let barBtn = UIBarButtonItem()
+            barBtn.title = ""
+            navigationItem.backBarButtonItem = barBtn
+            self.navigationController?.pushViewController(nextVc, animated: true)
+        }
+    }
 }
 
 extension MovieListViewController : UICollectionViewDelegateFlowLayout {
