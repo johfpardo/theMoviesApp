@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import PINRemoteImage
 
 class MovieListViewController: UIViewController {
 
     //Constants
-    let cellWidth : CGFloat = 160.0
-    let cellMargin : CGFloat = 16.0
+    let cellMargin : CGFloat = 4.0
+    let numberOfCells : CGFloat = 2.0
     
     @IBOutlet weak var moviewColV: UICollectionView!
     var listViewModel : MovieListViewModel!
@@ -21,10 +22,6 @@ class MovieListViewController: UIViewController {
         super.viewDidLoad()
         moviewColV.delegate = self
         moviewColV.dataSource = self
-        //setup cell
-        let cell = moviewColV?.collectionViewLayout as! UICollectionViewFlowLayout
-        cell.minimumInteritemSpacing = CGFloat(self.cellMargin)
-        cell.minimumLineSpacing = CGFloat(self.cellMargin)
         
         listViewModel = MovieListViewModel(callback: self)
         listViewModel.getMovies()
@@ -40,7 +37,8 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         self.moviewColV.register(UINib(nibName: "MovieViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCellItem")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCellItem", for: indexPath) as! MovieViewCell
         if let url = URL(string: ConstantsRestApi.urlAccessPoster+self.listViewModel.movies[indexPath.row].poster_path) {
-            ProcessImage.shared.downloadImage(imageView: cell.moviePoster, from: url)
+            cell.moviePoster.pin_updateWithProgress = true
+            cell.moviePoster.pin_setImage(from: url)
         }
         return cell
     }
@@ -48,14 +46,14 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
 
 extension MovieListViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.setupWidthCell(cellWidth: cellWidth, cellMargin: cellMargin)
-        return CGSize(width: width, height: width)
+        let width = self.setupWidthCell(cellMargin: cellMargin)
+        let height = CGFloat(3*width/2)
+        return CGSize(width: width, height: height)
     }
     
-    func setupWidthCell(cellWidth : CGFloat, cellMargin : CGFloat) -> CGFloat {
-        let estimatedWidth = CGFloat(cellWidth)
+    func setupWidthCell(cellMargin : CGFloat) -> CGFloat {
+        let estimatedWidth = floor(CGFloat(self.view.frame.size.width) / numberOfCells)
         let cellCount = floor(CGFloat(self.view.frame.size.width) / estimatedWidth)
-        
         let margin = CGFloat(cellMargin * 2)
         let width = (self.view.frame.size.width - CGFloat(cellMargin) * (cellCount - 1) - margin) / cellCount
         return width
