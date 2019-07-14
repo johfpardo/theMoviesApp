@@ -23,7 +23,6 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(movie ?? "")
         navigationItem.title = movie.title
         if let url = URL(string: ConstantsRestApi.urlAccessPosterDetail+movie.backdrop_path) {
             movieImg.pin_updateWithProgress = true
