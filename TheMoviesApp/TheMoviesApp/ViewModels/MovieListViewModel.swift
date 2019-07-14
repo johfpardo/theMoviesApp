@@ -12,18 +12,20 @@ class MovieListViewModel {
     
     let callback : MovieListViewModelCallback
     var movies = [Movie]()
+    var page : Int = 0
     
     init(callback: MovieListViewModelCallback) {
         self.callback = callback
     }
     
     func getMovies() {
-        let url = ConstantsRestApi.baseUrl + ConstantsRestApi.urlGetPopular
+        let url = ConstantsRestApi.baseUrl +
+            (page == 0 ? ConstantsRestApi.urlGetPopular :
+                ConstantsRestApi.urlGetPopularWithPage + "\(page + 1)")
         ApiAccess.shared.getMovies(completion: { (responseObject, error) in
-            for movie in responseObject["results"] as! [Any] {
-                if let movieObj = self.turnToObject(Movie.self, from: movie) {
-                    self.movies.append(movieObj)
-                }
+            if let popularMovies = self.turnToObject(PopularMovies.self, from: responseObject) {
+                self.page = popularMovies.page
+                self.movies.append(contentsOf: popularMovies.results)
             }
             //Inform
             self.callback.getMoviesFinished()

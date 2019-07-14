@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8303749722DB892E000143EE /* PopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8303749622DB892E000143EE /* PopularMovies.swift */; };
 		838184BF22DA860A00919ABD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838184BE22DA860A00919ABD /* AppDelegate.swift */; };
 		838184C622DA860C00919ABD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838184C522DA860C00919ABD /* Assets.xcassets */; };
 		838184C922DA860C00919ABD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838184C722DA860C00919ABD /* LaunchScreen.storyboard */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		03F3D7C28973AC637C922C12 /* Pods-TheMoviesAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMoviesAppTests.release.xcconfig"; path = "Target Support Files/Pods-TheMoviesAppTests/Pods-TheMoviesAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		8303749622DB892E000143EE /* PopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovies.swift; sourceTree = "<group>"; };
 		838184BB22DA860A00919ABD /* TheMoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838184BE22DA860A00919ABD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		838184C522DA860C00919ABD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				838184F822DA9DF700919ABD /* Movie.swift */,
+				8303749622DB892E000143EE /* PopularMovies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8303749722DB892E000143EE /* PopularMovies.swift in Sources */,
 				838184FF22DA9FDC00919ABD /* ConstantsRestApi.swift in Sources */,
 				838184F122DA9D8100919ABD /* MovieListViewController.swift in Sources */,
 				838184F722DA9DCA00919ABD /* MovieViewCell.swift in Sources */,

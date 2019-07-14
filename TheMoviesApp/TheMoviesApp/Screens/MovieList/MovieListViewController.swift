@@ -42,6 +42,12 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == listViewModel.movies.count - 1 {
+            listViewModel.getMovies()
+        }
+    }
 }
 
 extension MovieListViewController : UICollectionViewDelegateFlowLayout {
