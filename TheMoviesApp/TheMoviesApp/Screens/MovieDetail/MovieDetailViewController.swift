@@ -24,6 +24,7 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = movie.title
+        movieImg.image = UIImage(named: "icons8-movie-100-2")
         if let url = URL(string: ConstantsRestApi.urlAccessPosterDetail+movie.backdrop_path) {
             movieImg.pin_updateWithProgress = true
             movieImg.pin_setImage(from: url)

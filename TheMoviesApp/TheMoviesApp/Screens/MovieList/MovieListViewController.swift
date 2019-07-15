@@ -36,6 +36,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         self.moviewColV.register(UINib(nibName: "MovieViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCellItem")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCellItem", for: indexPath) as! MovieViewCell
+        cell.moviePoster.image = UIImage(named: "icons8-movie-100-2")
         if let url = URL(string: ConstantsRestApi.urlAccessPoster+self.listViewModel.movies[indexPath.row].poster_path) {
             cell.moviePoster.pin_updateWithProgress = true
             cell.moviePoster.pin_setImage(from: url)
@@ -81,5 +82,11 @@ extension MovieListViewController : UICollectionViewDelegateFlowLayout {
 extension MovieListViewController : MovieListViewModelCallback {
     func getMoviesFinished() {
         self.moviewColV.reloadData()
+    }
+    
+    func error(message: String) {
+        showAlert("Error", message: message, titleAction: "Retry", completion: {
+            self.listViewModel.getMovies()
+        })
     }
 }
