@@ -10,4 +10,5 @@ import Foundation
 
 protocol MovieListViewModelCallback {
     func getMoviesFinished()
+    func error(message: String)
 }

@@ -24,9 +24,13 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = movie.title
-        if let url = URL(string: ConstantsRestApi.urlAccessPosterDetail+movie.backdrop_path) {
+        movieImg.image = UIImage(named: "icons8-movie-100-2")
+        let imagePath = movie.backdrop_path ?? movie.poster_path
+        if let imagePath = imagePath, let url = URL(string: ConstantsRestApi.urlAccessPosterDetail+imagePath) {
             movieImg.pin_updateWithProgress = true
             movieImg.pin_setImage(from: url)
+        } else {
+            movieImg.image = UIImage(named: "not_found")
         }
         overviewText.text = movie.overview
         releaseDateText.text = movie.release_date
