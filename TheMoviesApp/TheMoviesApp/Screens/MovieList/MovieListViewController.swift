@@ -37,9 +37,12 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         self.moviewColV.register(UINib(nibName: "MovieViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCellItem")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCellItem", for: indexPath) as! MovieViewCell
         cell.moviePoster.image = UIImage(named: "icons8-movie-100-2")
-        if let url = URL(string: ConstantsRestApi.urlAccessPoster+self.listViewModel.movies[indexPath.row].poster_path) {
+        if let posterPath = self.listViewModel.movies[indexPath.row].poster_path,
+            let url = URL(string: ConstantsRestApi.urlAccessPoster+posterPath) {
             cell.moviePoster.pin_updateWithProgress = true
             cell.moviePoster.pin_setImage(from: url)
+        } else {
+           cell.moviePoster.image = UIImage(named: "not_found")
         }
         return cell
     }
