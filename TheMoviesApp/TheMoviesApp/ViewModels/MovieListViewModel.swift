@@ -23,6 +23,11 @@ class MovieListViewModel {
             (page == 0 ? ConstantsRestApi.urlGetPopular :
                 ConstantsRestApi.urlGetPopularWithPage + "\(page + 1)")
         ApiAccess.shared.getMovies(completion: { (responseObject, error) in
+            if let error = error {
+                self.callback.error(message: error.localizedDescription)
+                return
+            }
+            
             if let popularMovies = self.turnToObject(PopularMovies.self, from: responseObject) {
                 self.page = popularMovies.page
                 self.movies.append(contentsOf: popularMovies.results)

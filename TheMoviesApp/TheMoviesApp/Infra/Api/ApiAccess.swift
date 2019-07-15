@@ -23,7 +23,7 @@ class ApiAccess {
             }
             if responseObject.result.isFailure {
                 let error : Error = responseObject.result.error!
-                completion(responseObject.result.value! as! [String : Any], error)
+                completion([:], error)
                 
             }
         }

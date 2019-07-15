@@ -36,9 +36,13 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         self.moviewColV.register(UINib(nibName: "MovieViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCellItem")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCellItem", for: indexPath) as! MovieViewCell
-        if let url = URL(string: ConstantsRestApi.urlAccessPoster+self.listViewModel.movies[indexPath.row].poster_path) {
+        cell.moviePoster.image = UIImage(named: "icons8-movie-100-2")
+        if let posterPath = self.listViewModel.movies[indexPath.row].poster_path,
+            let url = URL(string: ConstantsRestApi.urlAccessPoster+posterPath) {
             cell.moviePoster.pin_updateWithProgress = true
             cell.moviePoster.pin_setImage(from: url)
+        } else {
+           cell.moviePoster.image = UIImage(named: "not_found")
         }
         return cell
     }
@@ -46,6 +50,18 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == listViewModel.movies.count - 1 {
             listViewModel.getMovies()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = self.listViewModel.movies[indexPath.row]
+        let nextSb = UIStoryboard(name: "MovieDetail", bundle: nil)
+        if let nextVc = nextSb.instantiateInitialViewController() as? MovieDetailViewController {
+            nextVc.movie = movie
+            let barBtn = UIBarButtonItem()
+            barBtn.title = ""
+            navigationItem.backBarButtonItem = barBtn
+            self.navigationController?.pushViewController(nextVc, animated: true)
         }
     }
 }
@@ -69,5 +85,11 @@ extension MovieListViewController : UICollectionViewDelegateFlowLayout {
 extension MovieListViewController : MovieListViewModelCallback {
     func getMoviesFinished() {
         self.moviewColV.reloadData()
+    }
+    
+    func error(message: String) {
+        showAlert("Error", message: message, titleAction: "Retry", completion: {
+            self.listViewModel.getMovies()
+        })
     }
 }
